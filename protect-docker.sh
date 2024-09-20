@@ -15,7 +15,7 @@ else
 fi
 
 mkdir -p /etc/docker/tls && cd /etc/docker/tls
-echo -e "\n===============\nGenerate CA private and public keys\n==============="
+echo -e "\n====================================\nGenerate CA private and public keys\n===================================="
 echo
 openssl genrsa -aes256 -out ca-key.pem 4096
 openssl req -new -x509 -days 365 -key ca-key.pem -sha256 -out ca.pem
@@ -26,7 +26,7 @@ openssl genrsa -out server-key.pem 4096
 openssl req -subj "/CN=$HOST_SERV" -sha256 -new -key server-key.pem -out server.csr
 echo subjectAltName = DNS:$HOST_SERV,IP:$IP_HOST,IP:127.0.0.1 >> extfile.cnf
 echo extendedKeyUsage = serverAuth >> extfile.cnf
-echo -e "\n====================\nSign server key\n===================="
+echo -e "\n================\nSign server key\n================"
 echo
 openssl x509 -req -days 365 -sha256 -in server.csr -CA ca.pem -CAkey ca-key.pem \
   -CAcreateserial -out server-cert.pem -extfile extfile.cnf
@@ -36,7 +36,7 @@ echo
 openssl genrsa -out key.pem 4096
 openssl req -subj '/CN=client' -new -key key.pem -out client.csr
 echo extendedKeyUsage = clientAuth > extfile-client.cnf
-echo -e "\n====================\nSign client key\n===================="
+echo -e "\n================\nSign client key\n================"
 echo
 openssl x509 -req -days 365 -sha256 -in client.csr -CA ca.pem -CAkey ca-key.pem \
   -CAcreateserial -out cert.pem -extfile extfile-client.cnf
@@ -44,7 +44,7 @@ echo
 rm -v client.csr server.csr extfile.cnf extfile-client.cnf
 chmod -v 0400 ca-key.pem key.pem server-key.pem
 chmod -v 0444 ca.pem server-cert.pem cert.pem
-echo -e "\n==============\nCreate unit-file for docker service\n================"
+echo -e "\n====================================\nCreate unit-file for docker service\n===================================="
 echo
 cat <<EOF> /etc/systemd/system/docker.service
 [Unit]
@@ -67,10 +67,10 @@ Restart=always
 [Install]
 WantedBy=multi-user.target
 EOF
-echo -e "\n==================\nRestart docker service\n===================="
+echo -e "\n=======================\nRestart docker service\n======================="
 echo
 systemctl daemon-reload
 systemctl restart docker.service
 systemctl enable docker.service
-echo -e "\n=============\nDocker service mTLS listen port: 2376\n=============\n"
+echo -e "\n======================================\nDocker service mTLS listen port: 2376\n======================================\n"
 echo -e "\nOK\n"
