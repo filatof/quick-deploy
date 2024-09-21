@@ -81,7 +81,7 @@ systemctl restart docker.service
 systemctl enable docker.service
 echo -e "\n=======================\nInit swarm\n======================="
 echo
-docker swarm init --advertise-addr $HOST_SERV
+docker swarm init --advertise-addr $IP_HOST
 
 echo -e "\n======================================\nDocker service mTLS listen port: 2376\n======================================\n"
 echo -e "\nOK\n"
