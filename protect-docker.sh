@@ -18,7 +18,7 @@ mkdir -p /etc/docker/tls && cd /etc/docker/tls
 echo -e "\n====================================\nGenerate CA private and public keys\n===================================="
 echo
 openssl genrsa -aes256 -out ca-key.pem 4096
-openssl req -new -x509 -days 365 -key ca-key.pem -sha256 -out ca.pem
+openssl req -new -x509 -days 365 -key ca-key.pem -sha256 -out ca.pem -config openssl.conf
 echo
 echo -e "\n====================\nGenerate server key\n===================="
 echo
