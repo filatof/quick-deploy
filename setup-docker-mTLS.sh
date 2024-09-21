@@ -14,6 +14,12 @@ else
   exit 1
 fi
 
+if ! command -v docker &> /dev/null
+then
+    echo "Docker not install. Then install docker"
+    curl -s -o - https://get.docker.com | bash -
+fi
+
 mkdir -p /etc/docker/tls && cd /etc/docker/tls
 echo -e "\n====================================\nGenerate CA private and public keys\n===================================="
 echo
