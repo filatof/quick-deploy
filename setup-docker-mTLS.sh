@@ -73,6 +73,7 @@ Restart=always
 [Install]
 WantedBy=multi-user.target
 EOF
+
 echo -e "\n=======================\nRestart docker service\n======================="
 echo
 systemctl daemon-reload
