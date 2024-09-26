@@ -4,7 +4,7 @@
 #
 # Developed by Ivan Filatoff 20.09.2024
 #------------------------------------------------------------------------
-
+set -e 
 # check file
 if [ -s "var.conf" ]; then
   # load param
